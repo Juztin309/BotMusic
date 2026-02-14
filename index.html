@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Juztin Music Bot</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+  scroll-behavior:smooth;
+}
+
+body{
+  background:#0f0f0f;
+  color:white;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ===== Animated Gradient ===== */
+body::before{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background: linear-gradient(-45deg,#0f0f0f,#1a1a2e,#16213e,#0f3460);
+  background-size:400% 400%;
+  animation: gradientMove 20s ease infinite;
+  z-index:-3;
+}
+
+/* ===== Grid Layer ===== */
+body::after{
+  content:"";
+  position:fixed;
+  width:100%;
+  height:100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:40px 40px;
+  z-index:-2;
+}
+
+/* ===== Glow Orbs ===== */
+.glow{
+  position:fixed;
+  width:500px;
+  height:500px;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:0.4;
+  z-index:-1;
+  animation: floatGlow 12s ease-in-out infinite alternate;
+}
+
+.glow1{
+  background:#5865F2;
+  top:-100px;
+  left:-100px;
+}
+
+.glow2{
+  background:#00c3ff;
+  bottom:-150px;
+  right:-150px;
+  animation-delay:4s;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+  position:fixed;
+  top:0;
+  width:100%;
+  padding:15px 10%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,255,255,0.05);
+  z-index:1000;
+}
+
+.logo{
+  font-size:20px;
+  font-weight:600;
+}
+
+.logo span{
+  color:#5865F2;
+}
+
+.nav-links a{
+  margin-left:25px;
+  text-decoration:none;
+  color:#ddd;
+  transition:.3s;
+  font-size:14px;
+}
+
+.nav-links a:hover{
+  color:#5865F2;
+}
+
+/* ===== HERO ===== */
+.hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:150px 10% 100px;
+  min-height:100vh;
+}
+
+.hero-text{
+  max-width:550px;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.hero-text h1{
+  font-size:60px;
+  font-weight:700;
+}
+
+.hero-text span{
+  color:#5865F2;
+  text-shadow:0 0 20px rgba(88,101,242,0.9);
+}
+
+.hero-text p{
+  margin-top:20px;
+  color:#ddd;
+  line-height:1.6;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:40px;
+  padding:14px 40px;
+  border-radius:50px;
+  text-decoration:none;
+  font-weight:500;
+  background:#5865F2;
+  color:white;
+  transition:.4s;
+  box-shadow:0 0 20px rgba(88,101,242,0.4);
+}
+
+.btn:hover{
+  transform:translateY(-6px);
+  box-shadow:0 15px 40px rgba(88,101,242,0.8);
+}
+
+/* HERO IMAGE */
+.hero-image{
+  position:relative;
+  animation: float 4s ease-in-out infinite;
+}
+
+.hero-image img{
+  width:420px;
+  max-width:100%;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.7));
+}
+
+/* ===== FEATURES ===== */
+.features{
+  padding:120px 10%;
+  text-align:center;
+}
+
+.features h2{
+  font-size:42px;
+  margin-bottom:60px;
+}
+
+.card-container{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.1);
+  padding:35px;
+  border-radius:20px;
+  width:280px;
+  transition:.4s;
+  opacity:0;
+  transform:translateY(40px);
+}
+
+.card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* CONTACT */
+.contact{
+  padding:100px 10%;
+  text-align:center;
+}
+
+footer{
+  text-align:center;
+  padding:40px;
+  background:rgba(0,0,0,0.6);
+  font-size:13px;
+  color:#aaa;
+}
+
+/* ===== Animations ===== */
+@keyframes gradientMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+@keyframes float{
+  0%{transform:translateY(0px);}
+  50%{transform:translateY(-20px);}
+  100%{transform:translateY(0px);}
+}
+
+@keyframes floatGlow{
+  0%{transform:translate(0,0);}
+  50%{transform:translate(40px,40px);}
+  100%{transform:translate(-20px,-30px);}
+}
+
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(40px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .hero{
+    flex-direction:column;
+    text-align:center;
+  }
+  .hero-image{
+    margin-top:50px;
+  }
+  .nav-links{
+    display:none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<div class="navbar">
+  <div class="logo">Juztin <span>Music</span> Bot</div>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#features">Features</a>
+    <a href="#contact">Contact</a>
+    <a href="https://discord.com/oauth2/authorize?client_id=1472126248552497205&permissions=3148800&integration_type=0&scope=applications.commands+bot" target="_blank">Invite</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Juztin <span>Music</span> Bot</h1>
+    <p>High Quality Discord Music Bot • 24/7 Streaming • Powerful Queue System</p>
+    <a class="btn" href="https://discord.com/oauth2/authorize?client_id=1472126248552497205&permissions=3148800&integration_type=0&scope=applications.commands+bot" target="_blank">Invite Bot</a>
+  </div>
+
+  <div class="hero-image">
+    <img src="8a2750de7fc1fbd8af045fd709738770-removebg-preview.png" alt="Bot Image">
+  </div>
+</section>
+
+<section class="features" id="features">
+  <h2>✨ Features</h2>
+  <div class="card-container">
+    <div class="card"><h3>🎵 Crystal Audio</h3><p>High quality streaming without delay.</p></div>
+    <div class="card"><h3>🔁 Smart Queue</h3><p>Advanced queue & loop support.</p></div>
+    <div class="card"><h3>⚡ 24/7 Online</h3><p>Stable and optimized performance.</p></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <h2>📬 Contact</h2>
+  <p>Email: fakqdjaisg@gmail.com</p>
+  <p>Discord Server: Join Support Server</p>
+</section>
+
+<footer>
+© 2026 Juztin Music Bot • Not affiliated with Discord Inc.
+</footer>
+
+<script>
+/* Scroll Fade In */
+const cards = document.querySelectorAll('.card');
+window.addEventListener('scroll',()=>{
+  cards.forEach(card=>{
+    const rect = card.getBoundingClientRect();
+    if(rect.top < window.innerHeight - 100){
+      card.classList.add('show');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
